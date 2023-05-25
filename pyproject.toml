@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "collx"
+version = "0.1.0"
+description = "collx interview"
+authors = ["Jayson Dorsett <ja_dorsett@jdorsett.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "collx", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+sqlalchemy = "^2.0.15"
+cryptography = "^40.0.2"
+thefuzz = "^0.19.0"
+python-levenshtein = "^0.21.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.3.1"
+pymysql = "^1.0.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
