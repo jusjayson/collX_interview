@@ -1,0 +1,29 @@
+version: "3"
+services:
+  collx-interview:
+    image: ${DOCKER_REGISTRY}/${PROJECT_NAME}/test:${DOCKER_TAG_VERSION}
+    restart: unless-stopped
+    depends_on:
+      - collx-mysql
+    # condition: service_healthy
+    volumes:
+      - ${DOCKER_APP_SOURCE_FROM_COMPOSE}:${DOCKER_APP_DEST}
+
+  collx-mysql:
+    image: mysql
+    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=im_not_safe_change_me
+      - MYSQL_DATABASE=collx_prod
+      - MYSQL_USER=collx
+      - MYSQL_PASSWORD=collx
+    volumes:
+      - collx-interview-local-mysql-data:/var/lib/mysql
+      - ${DOCKER_APP_SOURCE_FROM_COMPOSE}/collx_card_data.sql:/collx_card_data.sql:ro
+
+
+volumes:
+  collx-interview-local-mysql-data:
+    driver: local
