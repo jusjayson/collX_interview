@@ -1,4 +1,3 @@
-import datetime as dt
 import re
 from typing import Dict, Optional, List, Tuple, Union
 
@@ -8,17 +7,8 @@ from thefuzz import fuzz
 from collx.db import get_engine, CARD_TABLE, PLAYER_TABLE, SET_TABLE
 from collx.utils import capitalize_separated_name
 
-# from collx.extract import query_for_double; query_for_double()
 
-
-def query_for_double():
-    with get_engine().begin() as conn:
-        results = conn.execute(select(SET_TABLE.c.name).distinct())
-        results = [re.sub(r"\d{4}", "", info[0]) for info in results]
-        print(results[0:100])
-
-
-def _query_for_set_name(name):
+def _query_for_set_name(name) -> List[Tuple[str, int]]:
     with get_engine().begin() as conn:
         return conn.execute(
             select(SET_TABLE.c.name, SET_TABLE.c.id)
@@ -27,7 +17,7 @@ def _query_for_set_name(name):
         ).all()
 
 
-def _query_for_player_name(name):
+def _query_for_player_name(name) -> List[Tuple[Union[str, int]]]:
     with get_engine().begin() as conn:
         return conn.execute(
             select(PLAYER_TABLE.c.name, PLAYER_TABLE.c.id)
@@ -37,8 +27,11 @@ def _query_for_player_name(name):
 
 
 def _validate_item_from_matches(
-    item: str, db_matches: List[Tuple[str, int]]
-) -> Optional[str]:
+    item: str, db_matches: List[Tuple[Union[str, int]]]
+) -> Optional[List[Union[str, int]]]:
+    """
+    Make best guess (if any) on the corresponding db item given an identifying string.
+    """
     ordered_db_matches = sorted(
         [
             (*db_match[0:2], fuzz.token_sort_ratio(item, db_match[0]))
@@ -53,7 +46,7 @@ def _validate_item_from_matches(
 
 
 def _extract_possible_player_from_title(title: str) -> Optional[str]:
-    name_pattern = r"[^\d\W]+\s+[^\d\W]+"
+    name_pattern = r"[^\d\W]+\s+[^\d\W]+"  # XXX: What about first middle last?
     name_match = None
     name_db_matches = []
     while title:
@@ -101,7 +94,7 @@ def extract_data(
     data: Dict[str, Optional[Union[str, int, float, bool]]]
 ) -> Dict[str, Optional[Union[str, int, float, bool]]]:
     """
-    Reuse or extract (from tile)` required trading card information (if available).
+    Reuse or extract (from tile) required trading card information (if available).
 
     Note: If there is a high chance of an extraction being a false positive, we avoid
     returning anything for said key, value.
@@ -112,16 +105,10 @@ def extract_data(
         raise ValueError(f"No title in data: {data}")
 
     parsed_title = data.get("title").lower()
-    if not (
-        card_year := (epoch := data.get("date_stamp"))
-        and (converted_year := dt.datetime.fromtimestamp(epoch).year)
-        and str(converted_year)
-    ):
-        card_year = _extract_year_from_title(parsed_title)
-
+    card_year = _extract_year_from_title(parsed_title)
     if possible_card_set_name := data.get("attributes", {}).get(
         "Set"
-    ):  # This may not match what's in db
+    ):  # This may not perfectly match what's in db
         set_db_matches = _query_for_set_name(possible_card_set_name)
     elif card_year:
         possible_card_set_name, set_db_matches = _extract_possible_set_from_title(
@@ -142,7 +129,7 @@ def extract_data(
 
     if possible_card_player_name := data.get("attributes", {}).get(
         "Player/Athlete"
-    ):  # This may not match what's in db
+    ):  # This may not perfectly match what's in db
         player_db_matches = _query_for_player_name(possible_card_player_name)
     else:
         (
