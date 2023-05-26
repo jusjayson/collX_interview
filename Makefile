@@ -92,7 +92,7 @@ init-project:
 		make init-project
 
 load-db:  # XXX: getting issues including sql file in scripts
-	docker exec -it compose-collx-mysql-1 /bin/bash -c "mysql -uroot -pim_not_safe_change_me collx_prod < data/collx_card_data.sql"
+	docker exec -it compose-collx-mysql-1 /bin/bash -c "mysql -uroot -pim_not_safe_change_me collx_prod < collx_card_data.sql"
 
 teardown-project:
 	cd $(DOCKER_CTX_FROM_PROJECT_ROOT)/$(DOCKER_PYTHON_DOCKER_FROM_CTX); \
@@ -100,11 +100,19 @@ teardown-project:
 		PROJECT_NAME=taxer \
 		make teardown-project
 
-teardown-test-project: export DOCKER_COMPOSE_FILE=$(DOCKER_CTX_FROM_PYTHON_DOCKER)/$(DOCKER_PROJECT_ROOT_FROM_CTX)/config/docker/compose/docker-compose.test.yaml;
+teardown-test-project: export DOCKER_COMPOSE_FILE=$(DOCKER_CTX_FROM_PYTHON_DOCKER)/$(DOCKER_PROJECT_ROOT_FROM_CTX)/config/docker/compose/docker-compose.test.yaml
+teardown-test-project: export NAMESPACE=test
 teardown-test-project:
 	make teardown-project
 
-teardown-local-project: export DOCKER_COMPOSE_FILE=$(DOCKER_CTX_FROM_PYTHON_DOCKER)/$(DOCKER_PROJECT_ROOT_FROM_CTX)/config/docker/compose/docker-compose.local.yaml;
-teardown-local-project:
-	make teardown-project
+run-tests: export DOCKER_LOCAL_CMD=pytest
+run-tests:
+	make launch-test-project
 
+test-matching-accuracy: export DOCKER_LOCAL_CMD=python test.py test_accuracy
+test-matching-accuracy:
+	make launch-test-project
+
+match-cards: export DOCKER_LOCAL_CMD=python test.py match_cards
+match-cards:
+	make launch-test-project
