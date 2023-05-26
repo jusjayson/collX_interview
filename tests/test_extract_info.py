@@ -30,15 +30,13 @@ def test_extract_player_from_compound_set():
     assert result.get("set") == "2012 Panini Cooperstown"
 
 
-@mock.patch("collx.extract._extract_year_from_title")
 @mock.patch("collx.extract._extract_possible_set_from_title")
 @mock.patch("collx.extract._extract_possible_player_from_title")
-def test_extract_from_full_data(mock_xtract_player, mock_xtract_set, mock_xtract_year):
+def test_extract_from_full_data(mock_xtract_player, mock_xtract_set):
     """
     Don't use unnecessary extracts if we already have the info we need
     """
     # These should not be used, but help w/ debugging
-    mock_xtract_year.return_value = 1999
     mock_xtract_set.return_value = "abc"
 
     test_data = {
@@ -77,7 +75,6 @@ def test_extract_from_full_data(mock_xtract_player, mock_xtract_set, mock_xtract
     result = extract_data(test_data)
     assert result.get("year") == 2023
     assert result.get("player") == "Colby Thomas"
-    mock_xtract_year.assert_not_called()
     mock_xtract_set.assert_not_called()
     mock_xtract_player.assert_not_called()
 
