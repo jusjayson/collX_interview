@@ -33,6 +33,7 @@ def _get_ebay_data_dir_as_iter() -> Iterable[Path]:
 def test_accuracy():
     total_count = correct_count = 0
     for ebay_data_file in _get_ebay_data_dir_as_iter():
+        LOGGER.info("Checking file: %s", ebay_data_file)
         ebay_data = json.loads(ebay_data_file.read_bytes())
         for ebay_item in ebay_data:
             if (card_id := ebay_item.get("card_id")) and _query_card_by_id(card_id):
