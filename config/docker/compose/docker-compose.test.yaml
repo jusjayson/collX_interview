@@ -21,7 +21,7 @@ services:
       - MYSQL_PASSWORD=collx
     volumes:
       - collx-interview-local-mysql-data:/var/lib/mysql
-      - ${DOCKER_APP_SOURCE_FROM_COMPOSE}/collx_card_data.sql:/collx_card_data.sql:ro
+      - ${DOCKER_APP_SOURCE_FROM_COMPOSE}/data/collx_card_data.sql:/collx_card_data.sql:ro
 
 
 volumes:
