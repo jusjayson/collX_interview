@@ -1,0 +1,53 @@
+Algorithm accuracy check
+FAILED: 2723, SUCCEEDED: 1471, TOTAL: 4194 35%
+
+Files used
+INFO:/app/src/collx/test.py:Checking file: data/ebay-sales/baseball-14582236.json
+INFO:/app/src/collx/test.py:Checking file: data/ebay-sales/baseball-14565133.json
+INFO:/app/src/collx/test.py:Checking file: data/ebay-sales/baseball-14572463.json
+INFO:/app/src/collx/test.py:Checking file: data/ebay-sales/baseball-14588109.json
+
+Matching results (over two runs)
+Totals: Failed: 17757, Succeeded: 392: Match rate: 2%
+
+Files and individual rates
+INFO:/app/test.py:Checking file: data/ebay-sales/baseball-14582236.json
+FAILED: 1072, SUCCEEDED: 92, TOTAL: 1164
+INFO:/app/test.py:Checking file: data/ebay-sales/hockey-14287663.json
+FAILED: 2553, SUCCEEDED: 7, TOTAL: 2560
+INFO:/app/test.py:Checking file: data/ebay-sales/hockey-14154639.json
+FAILED: 1636, SUCCEEDED: 5, TOTAL: 1641
+INFO:/app/test.py:Checking file: data/ebay-sales/football-14542279.json
+FAILED: 2102, SUCCEEDED: 21, TOTAL: 2123
+INFO:/app/test.py:Checking file: data/ebay-sales/basketball-14511505.json
+FAILED: 430, SUCCEEDED: 3, TOTAL: 433
+INFO:/app/test.py:Checking file: data/ebay-sales/baseball-14565133.json
+FAILED: 889, SUCCEEDED: 78, TOTAL: 967
+INFO:/app/test.py:Checking file: data/ebay-sales/baseball-14572463.json
+FAILED: 1282, SUCCEEDED: 145, TOTAL: 1427
+INFO:/app/test.py:Checking file: data/ebay-sales/basketball-14136603.json
+FAILED: 632, SUCCEEDED: 1, TOTAL: 633
+INFO:/app/test.py:Checking file: data/ebay-sales/hockey-14655431.json
+INFO:/app/test.py:Checking file: data/ebay-sales/hockey-14655431.json
+FAILED: 1671, SUCCEEDED: 9, TOTAL: 1680
+INFO:/app/test.py:Checking file: data/ebay-sales/basketball-14375518.json
+FAILED: 0, SUCCEEDED: 0, TOTAL: 0
+FAILED: 4904, SUCCEEDED: 236, TOTAL: 5140
+INFO:/app/test.py:Checking file: data/ebay-sales/basketball-14470671.json
+FAILED: 490, SUCCEEDED: 3, TOTAL: 493
+INFO:/app/test.py:Checking file: data/ebay-sales/football-14568293.json
+FAILED: 2073, SUCCEEDED: 16, TOTAL: 2089
+INFO:/app/test.py:Checking file: data/ebay-sales/hockey-14278674.json
+FAILED: 2700, SUCCEEDED: 14, TOTAL: 2714
+INFO:/app/test.py:Checking file: data/ebay-sales/hockey-14070787.json
+FAILED: 973, SUCCEEDED: 0, TOTAL: 973
+INFO:/app/test.py:Checking file: data/ebay-sales/baseball-14588109.json
+FAILED: 1347, SUCCEEDED: 79, TOTAL: 1426
+INFO:/app/test.py:Checking file: data/ebay-sales/basketball-14768160.json
+FAILED: 1040, SUCCEEDED: 5, TOTAL: 1045
+INFO:/app/test.py:Checking file: data/ebay-sales/football-14671850.json
+FAILED: 2314, SUCCEEDED: 19, TOTAL: 2333
+remaining files
+INFO:/app/test.py:Checking file: data/ebay-sales/football-14445240.json
+FAILED: 1916, SUCCEEDED: 20, TOTAL: 1936
+
