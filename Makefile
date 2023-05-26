@@ -92,7 +92,7 @@ init-project:
 		make init-project
 
 load-db:  # XXX: getting issues including sql file in scripts
-	docker exec -it compose-collx-mysql-1 /bin/bash -c "mysql -uroot -pim_not_safe_change_me collx_prod < collx_card_data.sql"
+	docker exec -it compose-collx-mysql-1 /bin/bash -c "mysql -uroot -pim_not_safe_change_me collx_prod < data/collx_card_data.sql"
 
 teardown-project:
 	cd $(DOCKER_CTX_FROM_PROJECT_ROOT)/$(DOCKER_PYTHON_DOCKER_FROM_CTX); \
