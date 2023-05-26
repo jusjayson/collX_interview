@@ -1,15 +1,6 @@
-import os
-from pathlib import Path
 from sqlalchemy import create_engine
 from sqlalchemy import MetaData, Table, Column, ForeignKey, Integer, String
 from sqlalchemy.engine import Engine
-
-
-def get_engine() -> Engine:
-    return create_engine(
-        "mysql+pymysql://collx:collx@collx-mysql/collx_prod", future=True
-    )
-
 
 metadata_obj = MetaData()
 CARD_TABLE = Table(
@@ -34,3 +25,12 @@ SET_TABLE = Table(
     Column("name", String(254)),
     Column("collection", String(254)),
 )
+
+
+def get_engine() -> Engine:
+    """ "
+    Connect to mysql database.
+    """
+    return create_engine(
+        "mysql+pymysql://collx:collx@collx-mysql/collx_prod", future=True
+    )
